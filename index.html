@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#090603">
+<title>Old Free Fire 2022 — Lobby Book</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:Georgia,"Times New Roman",serif;background:#090603;color:#f7ead0}
+body{
+  background:
+    radial-gradient(circle at 50% 15%,rgba(255,190,70,.08),transparent 35%),
+    linear-gradient(135deg,#100b06,#050403 55%,#120a04);
+  overflow-x:hidden;
+}
+button{font:inherit}
+.top{
+  min-height:70px;padding:12px 16px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  border-bottom:1px solid rgba(214,166,82,.28);
+  background:rgba(8,5,3,.94);
+  position:sticky;top:0;z-index:20;
+}
+.title{font-weight:900;letter-spacing:.8px;font-size:18px}
+.title span{color:#e7ad4b}
+.back{
+  border:1px solid rgba(231,173,75,.4);background:#171006;color:#f7ead0;
+  padding:9px 13px;border-radius:9px;cursor:pointer
+}
+.wrap{width:min(1000px,94%);margin:0 auto;padding:25px 0 45px}
+.heading{text-align:center;margin:5px 0 18px}
+.heading .small{font-size:12px;color:#c79548;letter-spacing:2px;text-transform:uppercase;font-weight:bold}
+.heading h1{font-size:clamp(29px,7vw,50px);margin:5px 0 4px}
+.heading p{margin:0;color:#a99a84;font-size:13px}
+
+.book-area{display:flex;justify-content:center;perspective:1800px}
+.book{
+  width:min(900px,100%);
+  position:relative;
+  padding:14px;
+  border-radius:12px;
+  background:linear-gradient(145deg,#513515,#1d1107 45%,#69451c);
+  box-shadow:0 20px 60px rgba(0,0,0,.65),0 0 35px rgba(199,143,55,.08);
+  border:1px solid #89602a;
+}
+.book-inner{
+  position:relative;
+  min-height:min(72vh,680px);
+  background:#e6d2ad;
+  border:7px solid #241508;
+  box-shadow:inset 0 0 0 2px #ad7d3d,inset 0 0 35px rgba(54,28,5,.35);
+  overflow:hidden;
+}
+.page{
+  position:absolute;inset:0;
+  padding:18px;
+  background:
+    radial-gradient(circle at 50% 50%,rgba(255,255,255,.22),transparent 65%),
+    #e6d2ad;
+  color:#241609;
+  display:flex;align-items:center;justify-content:center;
+  transform-origin:left center;
+  transition:transform .52s ease,opacity .2s ease;
+  backface-visibility:hidden;
+}
+.page::before{
+  content:"";
+  position:absolute;inset:10px;
+  border:1px solid rgba(91,54,15,.45);
+  pointer-events:none;
+}
+.page img{
+  max-width:100%;max-height:calc(min(72vh,680px) - 65px);
+  width:auto;height:auto;object-fit:contain;
+  display:block;
+  position:relative;z-index:2;
+  box-shadow:0 7px 20px rgba(0,0,0,.28);
+}
+.page-cover{
+  flex-direction:column;text-align:center;
+  background:
+    radial-gradient(circle at 50% 40%,rgba(245,195,91,.17),transparent 30%),
+    linear-gradient(145deg,#2c1808,#100904);
+  color:#efd19a;
+}
+.page-cover::before{border-color:rgba(222,169,77,.35)}
+.cover-icon{font-size:62px;margin-bottom:8px}
+.page-cover h2{font-size:clamp(27px,7vw,48px);margin:4px 0;text-transform:uppercase;letter-spacing:2px}
+.page-cover p{color:#b99764;margin:5px 0}
+.cover-line{width:130px;height:1px;background:#b77d2c;margin:17px auto}
+.page-number{
+  position:absolute;bottom:17px;left:0;right:0;text-align:center;
+  font-size:12px;color:#71501f;font-weight:bold;z-index:4;
+}
+.cover .page-number{color:#aa8148}
+
+.turning{transform:rotateY(-180deg);opacity:.2;pointer-events:none}
+.hidden{display:none}
+
+.controls{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  margin:17px 0 10px;flex-wrap:wrap
+}
+.control{
+  min-width:110px;padding:12px 17px;border-radius:10px;
+  border:1px solid rgba(231,173,75,.4);
+  background:linear-gradient(145deg,#241607,#100a04);
+  color:#f5dfb6;font-weight:bold;cursor:pointer;
+  box-shadow:0 7px 18px rgba(0,0,0,.25);
+}
+.control:disabled{opacity:.35;cursor:not-allowed}
+.control:not(:disabled):active{transform:scale(.97)}
+.counter{
+  min-width:92px;text-align:center;padding:10px 12px;
+  color:#c99b55;font-size:13px
+}
+.hint{text-align:center;color:#897965;font-size:12px;margin:7px 0 0}
+.dots{display:flex;justify-content:center;gap:6px;margin-top:13px;flex-wrap:wrap}
+.dot{width:7px;height:7px;border-radius:50%;background:#594325}
+.dot.active{background:#e3a93e;box-shadow:0 0 8px rgba(227,169,62,.55)}
+.note{
+  margin:26px auto 0;width:min(700px,100%);
+  padding:15px 17px;border:1px solid rgba(214,166,82,.2);
+  border-radius:11px;background:rgba(20,11,5,.65);
+  color:#9e8d76;text-align:center;font:13px Arial,sans-serif
+}
+
+@media(max-width:600px){
+  .top{min-height:62px}
+  .title{font-size:15px}
+  .back{font-size:12px;padding:8px 10px}
+  .wrap{width:96%;padding-top:18px}
+  .book{padding:9px}
+  .book-inner{min-height:66vh;border-width:5px}
+  .page{padding:11px}
+  .page img{max-height:calc(66vh - 45px)}
+  .control{min-width:100px;padding:11px 13px}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="title">🔥 OLD FREE <span>FIRE 2022</span></div>
+  <button class="back" onclick="history.back()">← Back</button>
+</header>
+
+<main class="wrap">
+  <div class="heading">
+    <div class="small">Classic Archive</div>
+    <h1>📖 Lobby Book</h1>
+    <p>Old Free Fire 2022 Lobby Collection</p>
+  </div>
+
+  <div class="book-area">
+    <div class="book">
+      <div class="book-inner" id="book">
+
+        <div class="page page-cover" id="cover">
+          <div class="cover-icon">📖</div>
+          <h2>Lobby Archive</h2>
+          <div class="cover-line"></div>
+          <p>OLD FREE FIRE • 2022</p>
+          <p style="font-size:12px;margin-top:14px">Classic Lobby Collection</p>
+          <div class="page-number">COVER</div>
+        </div>
+
+        <div class="page hidden" data-index="1">
+          <img src="https://i.supaimg.com/d9c7f586-ce17-4c79-9667-6ede2824ff5b/d1d3b5fb-f5a1-4209-929a-b8dd303c409d.jpg" alt="Old Free Fire 2022 Lobby 1">
+          <div class="page-number">PAGE 1</div>
+        </div>
+
+        <div class="page hidden" data-index="2">
+          <img src="https://i.supaimg.com/d9c7f586-ce17-4c79-9667-6ede2824ff5b/df90ece3-9bf9-4967-abbe-4e965cce4fb1.jpg" alt="Old Free Fire 2022 Lobby 2">
+          <div class="page-number">PAGE 2</div>
+        </div>
+
+        <div class="page hidden" data-index="3">
+          <img src="https://i.supaimg.com/d9c7f586-ce17-4c79-9667-6ede2824ff5b/bfd7251c-672b-427e-8494-9c9e6e61eef4.jpg" alt="Old Free Fire 2022 Lobby 3">
+          <div class="page-number">PAGE 3</div>
+        </div>
+
+        <div class="page hidden" data-index="4">
+          <img src="https://i.supaimg.com/d9c7f586-ce17-4c79-9667-6ede2824ff5b/d6e737e9-07d3-4504-8be2-34a1add0b043.jpg" alt="Old Free Fire 2022 Lobby 4">
+          <div class="page-number">PAGE 4</div>
+        </div>
+
+        <div class="page hidden" data-index="5">
+          <img src="https://i.supaimg.com/d9c7f586-ce17-4c79-9667-6ede2824ff5b/64c531cf-f30d-4dbd-b2db-477ec403b3bd.jpg" alt="Old Free Fire 2022 Lobby 5">
+          <div class="page-number">PAGE 5</div>
+        </div>
+
+        <div class="page hidden" data-index="6">
+          <img src="https://i.supaimg.com/d9c7f586-ce17-4c79-9667-6ede2824ff5b/124ab74b-ca4c-4896-b1d6-3d5ab8970b68.jpg" alt="Old Free Fire 2022 Lobby 6">
+          <div class="page-number">PAGE 6</div>
+        </div>
+
+        <div class="page hidden" data-index="7">
+          <img src="https://i.supaimg.com/d9c7f586-ce17-4c79-9667-6ede2824ff5b/3ebeb962-6be1-489e-bed3-e30aaa0055da.jpg" alt="Old Free Fire 2022 Lobby 7">
+          <div class="page-number">PAGE 7</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button class="control" id="prev">← Previous</button>
+    <div class="counter" id="counter">Cover</div>
+    <button class="control" id="next">Next →</button>
+  </div>
+
+  <div class="dots" id="dots"></div>
+  <div class="hint">Swipe left/right or use the buttons to turn the pages.</div>
+
+  <div class="note">
+    This is a testing Lobby Book. The image order is currently kept in the same
+    order as the links you provided. We can reorder the pages later if the original
+    2022 dates are confirmed.
+  </div>
+</main>
+
+<script>
+const pages = [...document.querySelectorAll(".page[data-index]")];
+const cover = document.getElementById("cover");
+const prev = document.getElementById("prev");
+const next = document.getElementById("next");
+const counter = document.getElementById("counter");
+const dots = document.getElementById("dots");
+
+let current = 0; // 0 = cover
+
+pages.forEach((_,i)=>{
+  const d=document.createElement("span");
+  d.className="dot";
+  d.dataset.i=i+1;
+  dots.appendChild(d);
+});
+
+function showPage(n){
+  current=Math.max(0,Math.min(pages.length,n));
+
+  cover.classList.toggle("hidden",current!==0);
+
+  pages.forEach((p,i)=>{
+    const index=i+1;
+    p.classList.toggle("hidden",index!==current);
+    p.classList.remove("turning");
+  });
+
+  counter.textContent=current===0 ? "Cover" : `Page ${current} / ${pages.length}`;
+  prev.disabled=current===0;
+  next.disabled=current===pages.length;
+
+  [...dots.children].forEach((d,i)=>{
+    d.classList.toggle("active",i+1===current);
+  });
+}
+
+function turnNext(){
+  if(current>=pages.length)return;
+  const old=current;
+  if(old>0){
+    const oldPage=pages[old-1];
+    oldPage.classList.remove("turning");
+    void oldPage.offsetWidth;
+    oldPage.classList.add("turning");
+  }
+  setTimeout(()=>showPage(old+1),180);
+}
+
+function turnPrev(){
+  if(current<=0)return;
+  const old=current;
+  showPage(old-1);
+}
+
+next.addEventListener("click",turnNext);
+prev.addEventListener("click",turnPrev);
+
+dots.addEventListener("click",e=>{
+  if(e.target.classList.contains("dot")){
+    showPage(Number(e.target.dataset.i));
+  }
+});
+
+let startX=0,startY=0;
+const book=document.getElementById("book");
+
+book.addEventListener("touchstart",e=>{
+  const t=e.changedTouches[0];
+  startX=t.clientX; startY=t.clientY;
+},{passive:true});
+
+book.addEventListener("touchend",e=>{
+  const t=e.changedTouches[0];
+  const dx=t.clientX-startX;
+  const dy=t.clientY-startY;
+  if(Math.abs(dx)>55 && Math.abs(dx)>Math.abs(dy)){
+    if(dx<0) turnNext();
+    else turnPrev();
+  }
+},{passive:true});
+
+document.addEventListener("keydown",e=>{
+  if(e.key==="ArrowRight")turnNext();
+  if(e.key==="ArrowLeft")turnPrev();
+});
+
+showPage(0);
+</script>
+</body>
+</html>
